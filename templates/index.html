@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard | EmployeeHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <div>
+
+        <p class="eyebrow">
+            EMPLOYEE MANAGEMENT
+        </p>
+
+        <h1>
+            Manage your team
+            <span>smarter.</span>
+        </h1>
+
+        <p class="hero-text">
+
+            Add, search, update and manage
+            employee information from one
+            clean dashboard.
+
+        </p>
+
+        <a
+            class="primary-button"
+            href="{{ url_for('add_employee') }}">
+
+            + Add New Employee
+
+        </a>
+
+    </div>
+
+
+    <div class="hero-art">
+
+        <div class="floating-card card-one">
+            👨‍💻 IT Team
+        </div>
+
+        <div class="floating-card card-two">
+            📊 Organized
+        </div>
+
+        <div class="hero-circle">
+            E
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            👥
+        </div>
+
+        <div>
+
+            <p>Total Employees</p>
+
+            <h2>
+                {{ total }}
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🏢
+        </div>
+
+        <div>
+
+            <p>Departments</p>
+
+            <h2>
+                {{ department_counts|length }}
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            ⚡
+        </div>
+
+        <div>
+
+            <p>System Status</p>
+
+            <h2 class="status-text">
+                Active
+            </h2>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="two-column">
+
+
+<section class="panel">
+
+    <div class="panel-heading">
+
+        <div>
+
+            <p class="eyebrow">
+                OVERVIEW
+            </p>
+
+            <h2>
+                Department Summary
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    {% if department_counts %}
+
+        <div class="department-list">
+
+        {% for item in department_counts %}
+
+            <div class="department-row">
+
+                <span>
+                    {{ item.department }}
+                </span>
+
+                <strong>
+                    {{ item.count }}
+                </strong>
+
+            </div>
+
+        {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <div>📭</div>
+
+            <h3>
+                No employees yet
+            </h3>
+
+            <p>
+                Add your first employee.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<section class="panel">
+
+    <div class="panel-heading">
+
+        <div>
+
+            <p class="eyebrow">
+                QUICK ACTIONS
+            </p>
+
+            <h2>
+                Get started
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="quick-actions">
+
+        <a
+            href="{{ url_for('add_employee') }}"
+            class="action-card">
+
+            <span>➕</span>
+
+            <div>
+
+                <strong>
+                    Add Employee
+                </strong>
+
+                <small>
+                    Create a new record
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="{{ url_for('employees') }}"
+            class="action-card">
+
+            <span>📋</span>
+
+            <div>
+
+                <strong>
+                    View Employees
+                </strong>
+
+                <small>
+                    Manage all records
+                </small>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<section class="panel">
+
+    <div class="panel-heading">
+
+        <div>
+
+            <p class="eyebrow">
+                LATEST
+            </p>
+
+            <h2>
+                Recently Added Employees
+            </h2>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('employees') }}"
+            class="text-link">
+
+            View all →
+
+        </a>
+
+    </div>
+
+
+    {% if recent_employees %}
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Department</th>
+
+                    <th>Salary</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for employee in recent_employees %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ employee.name }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ employee.email }}
+                    </td>
+
+                    <td>
+
+                        <span class="badge">
+                            {{ employee.department }}
+                        </span>
+
+                    </td>
+
+                    <td>
+                        ₹{{ "%.2f"|format(employee.salary) }}
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <div>👤</div>
+
+            <h3>
+                No employee records
+            </h3>
+
+            <p>
+                Add your first employee.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

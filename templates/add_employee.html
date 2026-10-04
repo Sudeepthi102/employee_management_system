@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Employee | EmployeeHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="form-page">
+
+    <div class="page-heading">
+
+        <div>
+
+            <p class="eyebrow">
+                EMPLOYEE MANAGEMENT
+            </p>
+
+            <h1>
+                Add New Employee
+            </h1>
+
+            <p>
+                Create a new employee record
+                in MySQL.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('employees') }}"
+            class="secondary-button">
+
+            ← Back
+
+        </a>
+
+    </div>
+
+
+    <form
+        method="POST"
+        class="form-card">
+
+
+        <div class="form-section-title">
+
+            <span>01</span>
+
+            <div>
+
+                <h2>
+                    Employee Details
+                </h2>
+
+                <p>
+                    Fill in the employee information.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="input-group">
+
+                <label>
+                    Full Name *
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="e.g. Rahul Kumar"
+                    required>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Email *
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="e.g. rahul@example.com"
+                    required>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Phone
+                </label>
+
+                <input
+                    type="tel"
+                    name="phone"
+                    maxlength="10"
+                    pattern="[0-9]{10}"
+                    placeholder="10-digit number">
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Department *
+                </label>
+
+                <select
+                    name="department"
+                    required>
+
+                    <option value="">
+                        Select department
+                    </option>
+
+                    <option value="IT">
+                        IT
+                    </option>
+
+                    <option value="HR">
+                        HR
+                    </option>
+
+                    <option value="Finance">
+                        Finance
+                    </option>
+
+                    <option value="Marketing">
+                        Marketing
+                    </option>
+
+                    <option value="Operations">
+                        Operations
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Salary (₹) *
+                </label>
+
+                <input
+                    type="number"
+                    name="salary"
+                    min="0"
+                    step="0.01"
+                    placeholder="e.g. 45000"
+                    required>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a
+                href="{{ url_for('employees') }}"
+                class="secondary-button">
+
+                Cancel
+
+            </a>
+
+
+            <button
+                type="submit"
+                class="primary-button">
+
+                Save Employee →
+
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}

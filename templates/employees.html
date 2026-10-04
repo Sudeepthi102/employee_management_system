@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block title %}
+Employees | EmployeeHub
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+
+        <p class="eyebrow">
+            EMPLOYEE DIRECTORY
+        </p>
+
+        <h1>
+            All Employees
+        </h1>
+
+        <p>
+            Search, edit or delete employee records.
+        </p>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('add_employee') }}"
+        class="primary-button">
+
+        + Add Employee
+
+    </a>
+
+</section>
+
+
+<section class="panel">
+
+
+<form
+    method="GET"
+    class="search-bar">
+
+
+    <div class="search-input">
+
+        <span>⌕</span>
+
+        <input
+            type="search"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search by name, email or department...">
+
+    </div>
+
+
+    <button
+        type="submit"
+        class="primary-button">
+
+        Search
+
+    </button>
+
+
+    {% if search %}
+
+    <a
+        href="{{ url_for('employees') }}"
+        class="secondary-button">
+
+        Clear
+
+    </a>
+
+    {% endif %}
+
+</form>
+
+
+{% if employees %}
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>ID</th>
+
+    <th>Employee</th>
+
+    <th>Phone</th>
+
+    <th>Department</th>
+
+    <th>Salary</th>
+
+    <th>Actions</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+
+{% for employee in employees %}
+
+<tr>
+
+    <td>
+        #{{ employee.id }}
+    </td>
+
+
+    <td>
+
+        <strong>
+            {{ employee.name }}
+        </strong>
+
+        <small class="table-email">
+            {{ employee.email }}
+        </small>
+
+    </td>
+
+
+    <td>
+        {{ employee.phone or "—" }}
+    </td>
+
+
+    <td>
+
+        <span class="badge">
+            {{ employee.department }}
+        </span>
+
+    </td>
+
+
+    <td>
+        ₹{{ "%.2f"|format(employee.salary) }}
+    </td>
+
+
+    <td>
+
+        <div class="actions">
+
+            <a
+                class="icon-button edit"
+                href="{{ url_for(
+                    'edit_employee',
+                    employee_id=employee.id
+                ) }}">
+
+                ✎
+
+            </a>
+
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'delete_employee',
+                    employee_id=employee.id
+                ) }}"
+                onsubmit="return confirmDelete(
+                    '{{ employee.name }}'
+                )">
+
+                <button
+                    class="icon-button delete"
+                    type="submit">
+
+                    🗑
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+
+</tbody>
+
+</table>
+
+</div>
+
+
+{% else %}
+
+
+<div class="empty-state">
+
+    <div>🔎</div>
+
+    <h3>
+        No employees found
+    </h3>
+
+    <p>
+
+        {% if search %}
+
+            Try another search term.
+
+        {% else %}
+
+            Add your first employee.
+
+        {% endif %}
+
+    </p>
+
+
+    <a
+        href="{{ url_for('add_employee') }}"
+        class="primary-button">
+
+        Add Employee
+
+    </a>
+
+</div>
+
+
+{% endif %}
+
+</section>
+
+{% endblock %}
